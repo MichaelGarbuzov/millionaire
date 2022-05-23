@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./app.css";
+import Timer from "./components/timer";
 import Trivia from "./components/Trivia";
 
 function App() {
-const [questionNumber, setQuestionNumber] = useState(1)
-const [timeOut, setTimeOut] = useState(false)
+const [questionNumber, setQuestionNumber] = useState(1);
+const [stop, setStop] = useState(false);
+const [earned, setEarned] = useState("$ 0");
  
 
 
@@ -78,7 +80,8 @@ const [timeOut, setTimeOut] = useState(false)
   ];
 
 
-  const moneyPyramid = [
+  const moneyPyramid = useMemo(()=>
+[
     {id:1, amount:"$ 100"},
     {id:2, amount:"$ 200"},
     {id:3, amount:"$ 300"},
@@ -95,20 +98,37 @@ const [timeOut, setTimeOut] = useState(false)
     {id:14, amount:"$ 500000"},
     {id:15, amount:"$ 1000000"},
 
-  ].reverse();
+  ].reverse(),
+  []
+);
+ 
+
+  useEffect(()=>{
+    questionNumber >1 && setEarned(moneyPyramid.find(m=>m.id === questionNumber-1).amount);
+  },[moneyPyramid,questionNumber]);
+  
   return (
     <div className="app">
     <div className="main">
+      {stop? (
+         <h1 className="EndText">You earned: {earned}</h1>
+         ):(
+
+ <>     
       <div className="top">
-        <div className="timer">30</div>
+        <div className="timer">
+          <Timer setStop={setStop} questionNumber= {questionNumber}/>
+        </div>
       </div>
       <div className="bottom">
         <Trivia
          data={data}
-         setTimeOut={setTimeOut} 
+         setStop={setStop} 
          questionNumber={questionNumber}
          setQuestionNumber={setQuestionNumber}/>
       </div>
+      </>
+          )}
     </div>
     <div className="pyramid">
       <ul className="moneyList">
