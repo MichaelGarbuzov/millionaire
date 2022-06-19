@@ -13,22 +13,22 @@ const [earned, setEarned] = useState("$ 0");
   const data = [
     {
       id: 1,
-      question: "Rolex is a company that specializes in what type of product?",
+      question: "?באיזה קבוצה שיחק אבי נמני",
       answers: [
         {
-          text: "Phone",
+          text: "מכבי חיפה",
           correct: false,
         },
         {
-          text: "Watches",
+          text: "מכבי תל אביב ",
           correct: true,
         },
         {
-          text: "Food",
+          text: "הפועל תל אביב",
           correct: false,
         },
         {
-          text: "Cosmetic",
+          text: "ביתר ירושלים",
           correct: false,
         },
       ],
